@@ -28,7 +28,7 @@ import (
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	pb "github.com/hyperledger/fabric/protos/peer"
 
-	"github.com/ianco/chaincode_1/model"
+	//"github.com/ianco/chaincode_1/model"
 )
 
 // ConfigCC example simple Chaincode implementation
@@ -38,8 +38,8 @@ type ConfigCC struct {
 func (t *ConfigCC) Init(stub shim.ChaincodeStubInterface) pb.Response {
 	fmt.Println("Init Config CC")
 	_, args := stub.GetFunctionAndParameters()
-	//var P1, P2 model.ParticipantData    // Participants
-	var ConfigVal model.ConfigData      // Configuration
+	//var P1, P2 ParticipantData    // Participants
+	var ConfigVal ConfigData      // Configuration
 	var ConfigStr string
 	var err error
 
@@ -48,16 +48,16 @@ func (t *ConfigCC) Init(stub shim.ChaincodeStubInterface) pb.Response {
 	}
 
 	// Initialize the chaincode
-	ConfigVal, err = model.Json2Config(args[0])
+	ConfigVal, err = Json2Config(args[0])
 	if err != nil {
 		return shim.Error(fmt.Sprintf("Args[0] is not a valid ConfigData [%s]", args[0]))
 	}
 /*
-	P1, err = model.Json2Participant(args[1])
+	P1, err = Json2Participant(args[1])
 	if err != nil {
 		return shim.Error("Args[1] is not a valid participant [%s]", args[1])
 	}
-	P2, err = model.Json2Participant(args[2])
+	P2, err = Json2Participant(args[2])
 	if err != nil {
 		return shim.Error("Args[2] is not a valid participant [%s]", args[2])
 	}
@@ -65,7 +65,7 @@ func (t *ConfigCC) Init(stub shim.ChaincodeStubInterface) pb.Response {
 	//fmt.Printf("Aval = %d, Bval = %d\n", Aval, Bval)
 
 	// Write the state to the ledger
-	ConfigStr, err = model.Config2Json(ConfigVal)
+	ConfigStr, err = Config2Json(ConfigVal)
 	if err != nil {
 		return shim.Error(fmt.Sprintf("Error converting ConfigData back to Json [%s]", args[0]))
 	}
@@ -108,7 +108,7 @@ func (t *ConfigCC) Invoke(stub shim.ChaincodeStubInterface) pb.Response {
 }
 
 func (t *ConfigCC) updateConfig(stub shim.ChaincodeStubInterface, args []string) pb.Response {
-	var ConfigVal, Aval model.ConfigData      // Configuration
+	var ConfigVal, Aval ConfigData      // Configuration
 	var Avalstr string
 	var err error
 
@@ -116,7 +116,7 @@ func (t *ConfigCC) updateConfig(stub shim.ChaincodeStubInterface, args []string)
 		return shim.Error("Incorrect number of arguments. Expecting 1")
 	}
 
-	ConfigVal, err = model.Json2Config(args[0])
+	ConfigVal, err = Json2Config(args[0])
 	if err != nil {
 		return shim.Error(fmt.Sprintf("Args[0] is not a valid ConfigData [%s]", args[0]))
 	}
@@ -129,7 +129,7 @@ func (t *ConfigCC) updateConfig(stub shim.ChaincodeStubInterface, args []string)
 	if Avalbytes == nil {
 		return shim.Error("Entity not found")
 	}
-	Aval, err = model.Json2Config(string(Avalbytes))
+	Aval, err = Json2Config(string(Avalbytes))
 	if err != nil {
 		return shim.Error(fmt.Sprintf("Error: not a valid ConfigData [%s]", string(Avalbytes)))
 	}
@@ -139,7 +139,7 @@ func (t *ConfigCC) updateConfig(stub shim.ChaincodeStubInterface, args []string)
 	//fmt.Printf("Aval = %d, Bval = %d\n", Aval, Bval)
 
 	// Write the state back to the ledger
-	Avalstr, err = model.Config2Json(Aval)
+	Avalstr, err = Config2Json(Aval)
 	if err != nil {
 		return shim.Error(err.Error())
 	}
@@ -154,7 +154,7 @@ func (t *ConfigCC) updateConfig(stub shim.ChaincodeStubInterface, args []string)
 // query callback representing the query of a chaincode
 func (t *ConfigCC) queryConfig(stub shim.ChaincodeStubInterface, args []string) pb.Response {
 	var jsonResp string // Entities
-	var Aval model.ConfigData
+	var Aval ConfigData
 	var err error
 
 	if len(args) != 0 {
@@ -172,12 +172,12 @@ func (t *ConfigCC) queryConfig(stub shim.ChaincodeStubInterface, args []string) 
 		return shim.Error(jsonResp)
 	}
 
-	Aval, err = model.Json2Config(string(Avalbytes))
+	Aval, err = Json2Config(string(Avalbytes))
 	if err != nil {
 		return shim.Error(fmt.Sprintf("Error: not a valid ConfigData [%s]", string(Avalbytes)))
 	}
 
-	jsonResp, err = model.Config2Json(Aval)
+	jsonResp, err = Config2Json(Aval)
 	fmt.Printf("Query Response: [%s]\n", jsonResp)
 	return shim.Success(Avalbytes)
 }
