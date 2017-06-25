@@ -3,32 +3,8 @@
 	"ignore": "test github.com/hyperledger/fabric",
 	"package": [
 		{
-			"checksumSHA1": "g/V4qrXjUGG9B+e3hB+4NAYJ5Gs=",
-			"path": "github.com/gorilla/context",
-			"revision": "08b5f424b9271eedf6f9f0ce86cb9396ed337a42",
-			"revisionTime": "2016-08-17T18:46:32Z"
-		},
-		{
-			"checksumSHA1": "D1BVROe0MVJEDgm++mv1iVQ6+80=",
-			"path": "github.com/gorilla/mux",
-			"revision": "8c683ee571b6ee7ffc9f1cafd13103c422e71cbf",
-			"revisionTime": "2017-06-21T21:27:26Z"
-		},
-		{
-			"checksumSHA1": "RVXtW+6qzpnkM8kQU1uSp/HEobg=",
-			"path": "github.com/ianco/jsonapi",
-			"revision": "b5d259078aed03ea236b5ed158952e91c80301c4",
-			"revisionTime": "2017-06-25T16:01:40Z"
-		},
-		{
 			"checksumSHA1": "7mUhis54ROKABU19FMg3wS+85Qs=",
 			"path": "github.com/ianco/jsonapi/model",
-			"revision": "b5d259078aed03ea236b5ed158952e91c80301c4",
-			"revisionTime": "2017-06-25T16:01:40Z"
-		},
-		{
-			"checksumSHA1": "+fGhvItbEJ/mdfaT98z6yCAhLzU=",
-			"path": "github.com/ianco/jsonapi/rest",
 			"revision": "b5d259078aed03ea236b5ed158952e91c80301c4",
 			"revisionTime": "2017-06-25T16:01:40Z"
 		}
