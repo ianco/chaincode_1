@@ -1,4 +1,4 @@
-package main
+package model
 
 import (
 	"encoding/json"
@@ -38,3 +38,4 @@ func Json2Config(s string) (ConfigData, error) {
 	err := json.Unmarshal(byt, &c)
 	return c, err
 }
+
