@@ -147,7 +147,7 @@ func (setup *BaseSetupImpl) InstallCC(chainCodeID string, chainCodePath string, 
 // GetDeployPath ..
 func (setup *BaseSetupImpl) GetDeployPath() string {
 	pwd, _ := os.Getwd()
-	return path.Join(pwd, "../fixtures")
+	return path.Join(pwd, "..")
 }
 
 // InstallAndInstantiateExampleCC ..
@@ -177,7 +177,7 @@ func (setup *BaseSetupImpl) InstallAndInstantiateExampleCC() error {
 // InstallAndInstantiateMyCC ..
 func (setup *BaseSetupImpl) InstallAndInstantiateMyCC() error {
 
-	chainCodePath := "github.com/cc"
+	chainCodePath := "cc"
 	chainCodeVersion := "v0"
 
 	if setup.ChainCodeID == "" {
