@@ -301,6 +301,44 @@ func (setup *BaseSetupImpl) MoveFunds() (string, error) {
 
 }
 
+// IsInstalledChaincode checks if the chaincode is installed or not
+func (setup *BaseSetupImpl) IsInstalledChaincode(name string) (bool, error) {
+	names, err := setup.GetInstalledChaincodes()
+	if err != nil {
+		return false, err
+	}
+	for _, a := range names {
+		if a == name {
+			return true, nil
+		}
+	}
+	return false, nil
+}
+
+// GetInstalledChaincodes returns installed chaincodes on the peer
+// Returns an array of chaincode names
+func (setup *BaseSetupImpl) GetInstalledChaincodes() ([]string, error) {
+	var names []string
+
+	peer := setup.Chain.GetPrimaryPeer()
+	if peer == nil {
+		return names, fmt.Errorf("No peer available")
+	}
+
+	response, err := setup.Client.QueryInstalledChaincodes(peer)
+	if err != nil {
+		return names, err
+	}
+
+	fmt.Printf("Chaincodes for peer [%+v]\n", peer)
+	for _, ccInfo := range response.Chaincodes {
+		fmt.Printf("ChaincodeInfo: %s", ccInfo.Name)
+		fmt.Printf("ChaincodeInfo: %+v", ccInfo)
+		names = append(names, ccInfo.Name)
+	}
+	return names, nil
+}
+
 // getEventHub initilizes the event hub
 func getEventHub(client fabricClient.Client) (events.EventHub, error) {
 	Logger.Infof("in getEventHub()")
